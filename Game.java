@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -8,18 +9,23 @@
  *  method.
  * 
  *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
+ *  rooms, creates the parser and starts the game. You will find that each room  has it own
+ *  unique object. Did I forget to mention that the user will have an hp threshold that decreases
+ *  as you move. Do not worry though you can increase your hp by eating.
+ *  It also evaluates and executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Abdullah Abdulwahab
+ * @version 10.23.2022
  */
+
 
 public class Game 
 {
     private Parser parser;
+    private int hp = 10;
+    private Room pastRoom;
     private Room currentRoom;
-        
+    private Room room; 
     /**
      * Create the game and initialise its internal map.
      */
@@ -31,17 +37,33 @@ public class Game
 
     /**
      * Create all the rooms and link their exits together.
+     * This method also sets items across all the rooms
+     * 
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, adjunct, gym, pool , planetarium, 
+        gaming, IT, hardware, cafeteria, presidents, HR, dataCenter, security;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
         theater = new Room("in a lecture theater");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        adjunct = new Room("adjunct office room");
+        gym = new Room("the weight lifting room gym");
+        cafeteria = new Room("in the cafeteria");
+        pool = new Room("the room where the in door swimming pool is located.");
+        planetarium = new Room("in a planetarium");
+        IT = new Room("The IT helpdesk room");
+        gaming = new Room("Gamers assemble");
+        dataCenter = new Room("the server room");
+        hardware = new Room("in a computer hardware storage room");
+        HR = new Room("in the HR room");
+        security = new Room("The Security office room");
+        presidents = new Room("The presidents room");
+        
+        
         //create items
         
         Item barBell = new Item("Bar bell",50,"  A normal barbell, that belongs in the gym");
@@ -66,16 +88,34 @@ public class Game
         outside.setExit("east", theater);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
-
+        outside.setExit("north", gym);
         theater.setExit("west", outside);
-
+        theater.setExit("east", gaming);
+        gaming.setExit("west", theater);
         pub.setExit("east", outside);
-
         lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
+        lab.setExit("east", adjunct);
+        adjunct.setExit("west", lab);
+        adjunct.setExit("south", dataCenter);
+        dataCenter.setExit("north", adjunct);
+        gym.setExit("south", outside);
+        gym.setExit("east", IT);
+        gym.setExit("north", hardware);
+        IT.setExit("west", gym);
+        IT.setExit("east", dataCenter);
+        hardware.setExit("west", IT);
+        dataCenter.setExit("south", gym);
+        presidents.setExit("west", pub);
+        presidents.setExit("north", cafeteria);
+        presidents.setExit("east", outside);
+        presidents.setExit("south", security);
+        cafeteria.setExit("north", HR);
+        cafeteria.setExit("west", planetarium);
+        cafeteria.setExit("south", presidents);
+        planetarium.setExit("east", cafeteria);
+        HR.setExit("south", cafeteria);
+        security.setExit("north", presidents);
+        
         // assigning items to rooms
         outside.addItem(rock);
         IT.addItem(VGA);
@@ -97,7 +137,7 @@ public class Game
     
         currentRoom = outside;  // start game outside
     }
-
+    
     /**
      *  Main play routine.  Loops until end of play.
      */
@@ -145,8 +185,6 @@ public class Game
                 System.out.println("I don't know what you mean...");
                 break;
 
-            case HELP:
-                printHelp();
                 break;
 
             case GO:
@@ -190,13 +228,19 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
+        
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
-        else {
+        else if(hp <= 0){
+            System.out.println("unable to move, you must eat.");
+        }
+        else{
+            hp = hp - 1;
+            room = currentRoom;
             currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            pastRoom = nextRoom;
+            System.out.println(currentRoom.getLongDescription() + "\n" + getHP());
         }
     }
     
