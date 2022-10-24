@@ -1,0 +1,26 @@
+Project: zuul text adventure
+Author: Abdullah Abdulwahab
+
+Features:
+
+basic:
+
+added look feature
+added eat feature
+
+Intermediate:
+
+created item class
+made it so each room can hold a multitude of items.
+
+Advanced:
+
+created hp system so the character looses hp when moving to a room
+and gains hp when executing the eat command.
+
+I made it so the user has to have more than 0 hp to move.
+
+
+
+
+
