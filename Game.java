@@ -42,6 +42,25 @@ public class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        //create items
+        
+        Item barBell = new Item("Bar bell",50,"  A normal barbell, that belongs in the gym");
+        Item VGA = new Item("VGA cable",1, "VGA display cable");
+        Item server = new Item("Server",10 ," These is a server that is in the server room");
+        Item wallet = new Item("Wallet",1 ," This wallet was found in security");
+        Item alienWare = new Item("Alienware gaming pc",15 ," this is a normal gaming pc found in the gaming room");
+        Item graphicsCard = new Item("RTX 4090 graphics card",3 ,"Wow this thing is massive. Found in the IT helpdesk");
+        Item goggles = new Item("Swimming goggle",1 ,"these are normal swimming goggles in the pool room");
+        Item picture = new Item("Picture",5 ,"this looks like a picutre of the president. It belongs in the presidents room");
+        Item telescope = new Item("telescope",25 ,"This is a telescope that belong in the planetarium");
+        Item rock = new Item("Rock",4 ,"normal rock the belongs outside");
+        Item tray = new Item("Food tray",3 ,"this looks like it belongs in the cafe");
+        Item computer = new Item("Computer",10 ,"cmputer that is in the lab");
+        Item ID = new Item("employee ID", 1," found in HR");
+        Item oldPrinter = new Item("Old printer",30 ,"belongs in the adjunct office");
+        Item monitor = new Item("Monitor",19 ," found in the hardware storage room");
+        Item projector = new Item("Projector",20 ," found in the theator");
+        Item cup = new Item("Cup",2 ,"This looks to be like a glass cup that belongs in the pub");
         
         // initialise room exits
         outside.setExit("east", theater);
@@ -57,6 +76,25 @@ public class Game
 
         office.setExit("west", lab);
 
+        // assigning items to rooms
+        outside.addItem(rock);
+        IT.addItem(VGA);
+        IT.addItem(graphicsCard);
+        theater.addItem(projector);
+        lab.addItem(computer);
+        presidents.addItem(picture);
+        cafeteria.addItem(tray);
+        dataCenter.addItem(server);
+        gym.addItem(barBell);
+        security.addItem(wallet);
+        pool.addItem(goggles);
+        HR.addItem(ID);
+        gaming.addItem(alienWare);
+        planetarium.addItem(telescope);
+        adjunct.addItem(oldPrinter);
+        hardware.addItem(monitor);
+        pub.addItem(cup);
+    
         currentRoom = outside;  // start game outside
     }
 

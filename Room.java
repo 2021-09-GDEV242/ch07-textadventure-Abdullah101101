@@ -1,26 +1,31 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
+ *
  *
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  For each existing exit, the room 
- * stores a reference to the neighboring room.
+ * stores a reference to the neighboring room. The room is also able to store
+ * items with a name description and weight of the item.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Abdullah Abdulwahab
+ * @version 10.23.2022
  */
 
 public class Room 
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
-
+    // stores items
+    private ArrayList<Item> items;
+    
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -31,6 +36,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
+        items = new ArrayList<Item>();
     }
 
     /**
@@ -60,7 +66,13 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        String descripiton = "\nYou are " + description + "\n";
+         for (Item item : items) {
+                description += "\n" + item.getItemInformation();
+            }
+            description += "\n";
+            return description + "\n" + getExitString();
+            
     }
 
     /**
@@ -88,5 +100,17 @@ public class Room
     {
         return exits.get(direction);
     }
-}
+    /**
+     * This method creates items
+     * @param item to be added
+     */
+    public void addItem(Item item)
+    {
+        items.add(item);
+    }
+    
+
+    
+
+} 
 
