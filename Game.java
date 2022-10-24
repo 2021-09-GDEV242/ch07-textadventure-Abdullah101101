@@ -157,16 +157,25 @@ public class Game
     }
 
     /**
+     * This method get the HP of the user
+     * @return a string with the current hp
+     */
+    private String getHP(){
+        return "HP: " + hp;
+    }
+    
+    /**
      * Print out the opening message for the player.
      */
     private void printWelcome()
     {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("World of Zuul is a new, incredibly boring adventure game.\nGo around to" + 
+        "see all the cool items in each room");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(currentRoom.getLongDescription() + "\n" + getHP());
     }
 
     /**
@@ -184,9 +193,7 @@ public class Game
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;
-
-                break;
-
+                
             case GO:
                 goRoom(command);
                 break;
