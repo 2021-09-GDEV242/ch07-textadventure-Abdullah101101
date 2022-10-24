@@ -115,6 +115,18 @@ public class Game
                 goRoom(command);
                 break;
 
+            case LOOK:
+                look();
+                break;
+                
+            case EAT:
+                eat();
+                break;
+                
+            case HELP:
+                printHelp();
+                break;
+                
             case QUIT:
                 wantToQuit = quit(command);
                 break;
@@ -123,20 +135,6 @@ public class Game
     }
 
     // implementations of user commands:
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
-     */
-    private void printHelp() 
-    {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
-        parser.showCommands();
-    }
 
     /** 
      * Try to go in one direction. If there is an exit, enter the new
@@ -163,7 +161,44 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
         }
     }
-
+    
+    /**
+     * Print out some help information.
+     * Here we print some stupid, cryptic message and a list of the 
+     * command words.
+     */
+    private void printHelp() 
+    {
+        System.out.println("You are lost. You are alone. You wander");
+        System.out.println("around at the university.");
+        System.out.println();
+        System.out.println("Your command words are:");
+        parser.showCommands();
+    }
+    
+    /**
+     * This method gives information about the current room that the user
+     * is in.
+     */
+    private void look(){
+        System.out.println("You are " + currentRoom.getLongDescription() + "\n" + getHP()); 
+    }
+    
+    /**
+     * This allow the player to eat.
+     * A user must eat inorder to move
+     */
+    private void eat(){
+        if(hp >= 0 && hp <=9){
+        hp++;
+        System.out.println("Nice job, because you ate your hp increased by 1\n" + getHP());
+        }
+        else if (hp == 10){
+            System.out.println("unable to eat when hp is full");
+        }
+    }   
+    
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
